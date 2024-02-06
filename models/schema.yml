@@ -1,0 +1,47 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: gz_raw_data
+    description: dataset raw data Big query de Greenweez
+    tables:
+      - name: product
+        identifier: raw_gz_product
+        description: table produits Greenweez
+        columns:
+          - name:  products_id
+            description : Id produit
+            tests:
+              - unique
+              - not_null   
+          - name:  purchSE_PRICE
+            description: prix d'achat     
+
+      - name: sales
+        identifier: raw_gz_sales
+        description : table sales Greenweez
+        freshness: 
+          warn_after:
+            count: 90
+            period: day
+        loaded_at_field: "CAST (date_date AS TIMESTAMP)"
+        
+
+        columns:
+          - name: CONCAT(pdt_id,orders_id)
+            description: concaténation
+            tests:
+              - unique
+              - not_null
+          
+              
+      - name: ship
+        identifier: raw_gz_ship
+        description : table logistique Greenweez
+        columns:
+          - name: orders_id
+            description : order ID
+            tests:
+              - unique
+              - not_null
+  
