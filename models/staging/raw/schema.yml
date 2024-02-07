@@ -43,6 +43,7 @@ sources:
             tests:
               - unique
               - not_null
+              
       - name: adwords
         identifier: raw_gz_adwords
         description: table adwords
